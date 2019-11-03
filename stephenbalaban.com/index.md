@@ -35,4 +35,4 @@ title: Stephen Balaban\'s blog
 
 Created using Make & bash, <a href="https://github.com/stephenbalaban/stephenbalaban.com">source available here</a>.
 
-Last Updated: Sun Nov  3 01:03:22 PDT 2019.
+Last Updated: Sun Nov  3 01:07:58 PDT 2019.
