@@ -1,9 +1,9 @@
 # Stephen's blog repository
 
-## To install dependencies (pandoc, make, awscli)
+## To install dependencies (pandoc, make, awscli, rsync)
 
 ```
-sudo apt-get install -y build-essential pandoc awscli
+sudo apt-get install -y build-essential pandoc awscli rsync
 ```
 
 ## To configure your awscli

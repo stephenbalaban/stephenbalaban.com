@@ -1,12 +1,12 @@
 #!/bin/bash
 # Generates index.md
 
-CONTENT_DIR=stephenbalaban.com
+CONTENT_DIR=${1}
 INDEX_PATH=${CONTENT_DIR}/index.md
 
 cat > ${INDEX_PATH} <<EOF
 ---
-title: Stephen Balaban's blog
+title: ${2}
 ---
 
 $(for file in `find ${CONTENT_DIR}/*/ | grep md$`;
@@ -17,5 +17,5 @@ do
 	echo "* $date [$title]($path)";
 done | sort -nrk 2)
 
-Last Updated: $(date). Created using Make & bash, <a href="ht">source available here</a>.
+Last Updated: $(date). Created using Make & bash, <a href="https://github.com/stephenbalaban/stephenbalaban.com">source available here</a>.
 EOF
