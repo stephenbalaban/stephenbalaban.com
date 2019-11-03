@@ -11,8 +11,8 @@ title: ${2}
 
 $(for file in `find ${CONTENT_DIR}/*/ | grep md$`;
 do
-	title=$(cat $file|grep title: | awk -F': ' '{ print $2 }' | sed 's/\"//g');
-	date=$(cat $file|grep date: | awk -F': ' '{ print $2 }' | sed 's/"//g');
+	title=$(cat $file|grep title: | head -n 1 | awk -F': ' '{ print $2 }' | sed 's/\"//g');
+	date=$(cat $file|grep date: | head -n 1 | awk -F': ' '{ print $2 }' | sed 's/"//g');
 	path=http:\/\/$(echo $file | sed 's/index\.md//');
 	echo "* $date [$title]($path)";
 done | sort -nrk 2)

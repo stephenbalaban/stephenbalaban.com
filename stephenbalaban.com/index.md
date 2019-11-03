@@ -2,7 +2,7 @@
 title: Stephen Balaban\'s blog
 ---
 
-* 2019-11-03
+* 2019-11-03 [Static site generation in 50 lines of code](http://stephenbalaban.com/static-site-generation-in-50-lines-of-make/)
 * 2019-09-11 [Assembling the B-25 Mitchell bomber, 1942](http://stephenbalaban.com/assembling-the-b-25-mitchell-bomber-1942/)
 * 2019-08-25 [Memento mori](http://stephenbalaban.com/memento-mori/)
 * 2019-06-10 [Science Presenting Steam and Electricity to Commerce and Manufacture](http://stephenbalaban.com/science-presenting-steam-and-electricity-to-commerce-and-manufacture/)
@@ -32,8 +32,5 @@ title: Stephen Balaban\'s blog
 * 2010-09-04 [the knowledge economy of world of warcraft + other lectures by JSB](http://stephenbalaban.com/the-knowledge-economy-of-world-of-warcraft-other-lectures-by-jsb/)
 * 2010-09-02 [tessellating cellular automaton](http://stephenbalaban.com/tessellating-cellular-automaton/)
 * 2010-08-31 [It is not the critic who counts; not the...](http://stephenbalaban.com/it-is-not-the-critic-who-counts-not-the/)
-| awk -F' [Static site generation in 50 lines of code
-| awk -F'](http://stephenbalaban.com/static-site-generation-in-50-lines-of-make/)
-${2}
 
-Last Updated: Sun Nov  3 00:42:57 PDT 2019. Created using Make & bash, <a href="https://github.com/stephenbalaban/stephenbalaban.com">source available here</a>.
+Last Updated: Sun Nov  3 00:48:31 PDT 2019. Created using Make & bash, <a href="https://github.com/stephenbalaban/stephenbalaban.com">source available here</a>.
