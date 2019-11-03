@@ -7,7 +7,7 @@ date: "2013-01-19"
 
 There are four things you need to know about NSCache. The first, and most important: **NSCache exists**. I recently wrote a cache object in Objective-C, this was a mistake. I Google'd "objective-c cache class":
 
-[![NSCache](./images/Screen-Shot-2013-01-19-at-4.02.28-AM-300x222.png)](./images/Screen-Shot-2013-01-19-at-4.02.28-AM.png)
+[![NSCache](./images/Screen-Shot-2013-01-19-at-4.02.28-AM.png)](./images/Screen-Shot-2013-01-19-at-4.02.28-AM.png)
 Unhelpful Google results for "objective-c cache class".
 
 Top results looked uninteresting and I was feeling saucy; so I implemented one from scratch. I will be happy if this post serves no other purpose than to prevent you from making the same mistake. Now that you know the most important thing about NSCache, here are three more things you should know (especially if you still want to implement your own cache, which I recommend as an exercise). \[1\]

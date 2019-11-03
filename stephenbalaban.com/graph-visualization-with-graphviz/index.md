@@ -11,7 +11,7 @@ I have a few idaes for startups with a graph-like structure and found myself exp
 
 Using my template I first made a graph of a random subset of (p \* 100)% of the 2-tuples in the cartesian product between the first _X_ integers:
 
-\[(a, b) for a in range(_X_) for b in range(_X_) if random() < p\]
+`[(a, b) for a in range(_X_) for b in range(_X_) if random() < p]`
 
 Here's the middle of the graph for p=0.02:
 
@@ -21,7 +21,7 @@ Here's the middle of the graph for p=0.02:
 
 Next, I decided to see what the graph of integers < _X_ that have more than _Y_ factors in common.
 
-\[(a, b) for a in range(_X_) for b in range(_X_) if len(common\_factors(a,b)) > _Y_\]
+`[(a, b) for a in range(X) for b in range(X) if len(common_factors(a,b)) > Y]`
 
  
 
@@ -45,10 +45,11 @@ Note: The first image is a section of an earlier iteration of the CommonFactors 
 
 \[1\] GraphViz project: http://graphviz.org - I used the point shape for the nodes here's the part of the code that describes my graph style:
 
+```
 graph gengraph {
-        graph \[bgcolor="#FFFFFF", outputorder="edgesfirst", dpi=1000\];
-        node \[width=0.0008, fixedsize=true, shape=point, color="#00000099"\];
-        edge \[penwidth=0.1, color="#00000099"\]graph \[bgcolor="#FFFFFF", outputorder="edgesfirst", dpi=1000\];
+        graph [bgcolor="#FFFFFF", outputorder="edgesfirst", dpi=1000];
+        node [width=0.0008, fixedsize=true, shape=point, color="#00000099"];
+        edge [penwidth=0.1, color="#00000099"]graph [bgcolor="#FFFFFF", outputorder="edgesfirst", dpi=1000];
         a -- b;
         b -- a;
         a -- c;
@@ -57,3 +58,4 @@ graph gengraph {
         b -- d;
         c -- d;
 }
+```
