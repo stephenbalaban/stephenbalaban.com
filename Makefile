@@ -26,4 +26,4 @@ clean:
 	rm -rf output
 
 upload:
-	aws s3 sync $(OUTPUT_DIR)/$(CONTENT_DIR) s3://$(CONTENT_DIR)
+	aws s3 sync $(OUTPUT_DIR)/$(CONTENT_DIR) s3://$(CONTENT_DIR) --delete
