@@ -30,8 +30,8 @@ title: ${2}
 
 $(for file in `find ${CONTENT_DIR}/*/ | grep md$`;
 do
-	title=$(cat $file|grep title: | head -n 1 | awk -F': ' '{ print $2 }' | sed 's/\"//g');
-	date=$(cat $file|grep date: | head -n 1 | awk -F': ' '{ print $2 }' | sed 's/"//g');
+	title=$(cat $file | grep title: | head -n 1 | awk -F'title: ' '{ print $2 }' | sed 's/\"//g');
+	date=$(cat $file | grep date: | head -n 1 | awk -F'date: ' '{ print $2 }' | sed 's/"//g');
 	path=http:\/\/$(echo $file | sed 's/index\.md//');
 	echo "* $date [$title]($path)";
 done | sort -nrk 2)
@@ -68,13 +68,13 @@ all : toc $(DOCS) images
 	pandoc --template=$(TEMPLATE) -s -o $(OUTPUT_DIR)/$(@) $<
 
 images:
-	rsync --relative -a $(CONTENT_DIR)/*/images $(OUTPUT_DIR)
+	rsync --relative -a $(CONTENT_DIR)/images $(CONTENT_DIR)/*/images $(OUTPUT_DIR)
 
 clean:
 	rm -rf output
 
 upload:
-	aws s3 sync $(OUTPUT_DIR)/$(CONTENT_DIR) s3://$(CONTENT_DIR)
+	aws s3 sync $(OUTPUT_DIR)/$(CONTENT_DIR) s3://$(CONTENT_DIR) --delete
 ```
 
 Feel free to use it yourself, the [source is available here](https://github.com/stephenbalaban/stephenbalaban.com).
