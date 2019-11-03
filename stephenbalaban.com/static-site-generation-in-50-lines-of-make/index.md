@@ -20,8 +20,6 @@ The entire source of our table of contents generation:
 
 ```
 #!/bin/bash
-# Generates index.md
-
 CONTENT_DIR=${1}
 INDEX_PATH=${CONTENT_DIR}/index.md
 
@@ -38,7 +36,9 @@ do
 	echo "* $date [$title]($path)";
 done | sort -nrk 2)
 
-Last Updated: $(date). Created using Make & bash, <a href="https://github.com/stephenbalaban/stephenbalaban.com">source available here</a>.
+Created using Make & bash, <a href="https://github.com/stephenbalaban/stephenbalaban.com">source available here</a>.
+
+Last Updated: $(date).
 EOF
 ```
 

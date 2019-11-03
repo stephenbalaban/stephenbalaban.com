@@ -1,4 +1,4 @@
-# Stephen's blog repository
+# Stephen's Make static site generator
 
 ## To install dependencies (pandoc, make, awscli, rsync)
 

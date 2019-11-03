@@ -7,8 +7,8 @@ title: Stephen Balaban\'s blog
 * 2019-08-25 [Memento mori](http://stephenbalaban.com/memento-mori/)
 * 2019-06-10 [Science Presenting Steam and Electricity to Commerce and Manufacture](http://stephenbalaban.com/science-presenting-steam-and-electricity-to-commerce-and-manufacture/)
 * 2015-03-11 [Technology is a part of you](http://stephenbalaban.com/technology-is-a-part-of-you/)
-* 2015-02-11 [Array Tuttle](http://stephenbalaban.com/array-tuttle-software-engineer/)
-* 2014-11-14 [Gravity](http://stephenbalaban.com/gravity-orbital-mechanics-game-written-elm/)
+* 2015-02-11 [Array Tuttle: Software Engineer](http://stephenbalaban.com/array-tuttle-software-engineer/)
+* 2014-11-14 [Gravity: An orbital mechanics game written in Elm](http://stephenbalaban.com/gravity-orbital-mechanics-game-written-elm/)
 * 2014-07-07 [Lisp is like living in a rich country](http://stephenbalaban.com/lisp-living-rich-country-poor/)
 * 2013-06-17 [Google Glass Lifestream](http://stephenbalaban.com/google-glass-lifestream/)
 * 2013-02-04 [Facebook Graph Search Breaks Your Privacy Settings](http://stephenbalaban.com/facebook-graph-search-breaks-your-privacy-settings/)
@@ -23,7 +23,7 @@ title: Stephen Balaban\'s blog
 * 2011-11-10 [Bjarne Stroustrup Talk at UMich Notes](http://stephenbalaban.com/bjarne-stroustrup-umich-talk-note/)
 * 2011-11-09 [Leonardo DaVinci Quotes on Humility](http://stephenbalaban.com/leonardo-davinci-quotes-humility/)
 * 2011-10-11 [Sceptre -- My Uncle's Epic 70s Rock Band](http://stephenbalaban.com/sceptre-my-uncles-epic-70s-rock-band/)
-* 2011-08-08 [RE](http://stephenbalaban.com/re-triangular-numbers-triangular-matchstick-numbers-oeis/)
+* 2011-08-08 [RE: Triangular Numbers - The Triangular Matchstick numbers on OEIS](http://stephenbalaban.com/re-triangular-numbers-triangular-matchstick-numbers-oeis/)
 * 2011-07-25 [Fun with Triangular Numbers + Triangular Corporate Logos](http://stephenbalaban.com/triangular-numbers-arrays-edges-triangle-corporate-logo/)
 * 2011-04-07 [Took the dive and launched my startup project - babolog.com](http://stephenbalaban.com/dive-launched-startup-project-babolog-com/)
 * 2011-02-01 [Semantic Web (an Electronic Commerce Perspective)](http://stephenbalaban.com/semantic-web-overview-an-electronic-commerce-perspective/)
@@ -33,4 +33,6 @@ title: Stephen Balaban\'s blog
 * 2010-09-02 [tessellating cellular automaton](http://stephenbalaban.com/tessellating-cellular-automaton/)
 * 2010-08-31 [It is not the critic who counts; not the...](http://stephenbalaban.com/it-is-not-the-critic-who-counts-not-the/)
 
-Last Updated: Sun Nov  3 00:48:31 PDT 2019. Created using Make & bash, <a href="https://github.com/stephenbalaban/stephenbalaban.com">source available here</a>.
+Created using Make & bash, <a href="https://github.com/stephenbalaban/stephenbalaban.com">source available here</a>.
+
+Last Updated: Sun Nov  3 01:03:22 PDT 2019.
