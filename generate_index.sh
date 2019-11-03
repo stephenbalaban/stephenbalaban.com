@@ -13,7 +13,7 @@ $(for file in `find ${CONTENT_DIR}/*/ | grep md$`;
 do
 	title=$(cat $file|grep title: | awk -F': ' '{ print $2 }' | sed 's/\"//g');
 	date=$(cat $file|grep date: | awk -F': ' '{ print $2 }' | sed 's/"//g');
-	path=https:\/\/$(echo $file | sed 's/index\.md//');
+	path=http:\/\/$(echo $file | sed 's/index\.md//');
 	echo "* $date [$title]($path)";
 done | sort -nrk 2)
 

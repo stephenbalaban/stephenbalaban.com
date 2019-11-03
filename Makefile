@@ -6,19 +6,24 @@ MARKDOWN_FILES := $(wildcard $(CONTENT_DIR)/*/*.md) $(wildcard $(CONTENT_DIR)/*.
 
 DOCS = $(MARKDOWN_FILES:.md=.html)
 
+.DEFAULT_GOAL := all
 .PHONY : maketoc
+.PHONY: images
 
 toc :
 	./generate_index.sh
 
-all : toc $(DOCS)
+all : toc $(DOCS) images
 
 %.html : %.md
 	mkdir -p output/$(shell dirname $<)
-	pandoc --template=$(TEMPLATE) -s -o output/$(@) $<
+	pandoc --template=$(TEMPLATE) -s -o $(OUTPUT_DIR)/$(@) $<
+
+images:
+	    rsync --relative -a $(CONTENT_DIR)/*/images $(OUTPUT_DIR)
 
 clean:
 	rm -rf output
 
 upload:
-	./upload.sh
+	aws s3 sync $(OUTPUT_DIR)/$(CONTENT_DIR) s3://stephenbalaban.com
