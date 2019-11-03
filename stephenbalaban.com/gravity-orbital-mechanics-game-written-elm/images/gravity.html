@@ -1,0 +1,587 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="UTF-8"><title>Gravity</title><script type="text/javascript" src="./elm-runtime.js"></script><script type="text/javascript">Elm.Main = Elm.Main || {};
+Elm.Main.make = function (_elm) {
+   "use strict";
+   _elm.Main = _elm.Main || {};
+   if (_elm.Main.values)
+   return _elm.Main.values;
+   var _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _A = _N.Array.make(_elm),
+   _E = _N.Error.make(_elm),
+   $moduleName = "Main";
+   var Basics = Elm.Basics.make(_elm);
+   var Color = Elm.Color.make(_elm);
+   var Graphics = Graphics || {};
+   Graphics.Collage = Elm.Graphics.Collage.make(_elm);
+   var Graphics = Graphics || {};
+   Graphics.Element = Elm.Graphics.Element.make(_elm);
+   var List = Elm.List.make(_elm);
+   var Maybe = Elm.Maybe.make(_elm);
+   var Native = Native || {};
+   Native.Json = Elm.Native.Json.make(_elm);
+   var Native = Native || {};
+   Native.Ports = Elm.Native.Ports.make(_elm);
+   var Signal = Elm.Signal.make(_elm);
+   var String = Elm.String.make(_elm);
+   var Text = Elm.Text.make(_elm);
+   var Time = Elm.Time.make(_elm);
+   var Touch = Elm.Touch.make(_elm);
+   var Window = Elm.Window.make(_elm);
+   var _op = {};
+   var hasTouch = A2(Signal.lift,
+   function (list) {
+      return Basics.not(List.isEmpty(list));
+   },
+   Touch.touches);
+   var emptyPosition = {ctor: "_Tuple2"
+                       ,_0: 0
+                       ,_1: 0};
+   var touchPosition = function (touches) {
+      return List.isEmpty(touches) ? emptyPosition : function () {
+         var touch = List.head(touches);
+         return {ctor: "_Tuple2"
+                ,_0: touch.x
+                ,_1: touch.y};
+      }();
+   };
+   var currentTouchPosition = A2(Signal.lift,
+   touchPosition,
+   Touch.touches);
+   var relativeToCenter = F2(function (_v0,
+   _v1) {
+      return function () {
+         switch (_v1.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v0.ctor)
+                 {case "_Tuple2":
+                    return {ctor: "_Tuple2"
+                           ,_0: Basics.toFloat(_v1._0) - Basics.toFloat(_v0._0) / 2
+                           ,_1: 0 - Basics.toFloat(_v1._1) + Basics.toFloat(_v0._1) / 2};}
+                 _E.Case($moduleName,
+                 "on line 186, column 7 to 64");
+              }();}
+         _E.Case($moduleName,
+         "on line 186, column 7 to 64");
+      }();
+   });
+   var accelerationScaleFactor = 1.0e11;
+   var velocityScaleFactor = 100000.0;
+   var tupleAdd = F2(function (_v8,
+   _v9) {
+      return function () {
+         switch (_v9.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v8.ctor)
+                 {case "_Tuple2":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v8._0 + _v9._0
+                           ,_1: _v8._1 + _v9._1};}
+                 _E.Case($moduleName,
+                 "on line 128, column 6 to 22");
+              }();}
+         _E.Case($moduleName,
+         "on line 128, column 6 to 22");
+      }();
+   });
+   var universeForms = function (u) {
+      return A2(List.map,
+      function (o) {
+         return o.form;
+      },
+      u.objects);
+   };
+   var distance = F2(function (a,
+   b) {
+      return Basics.sqrt(Math.pow(a.pos.x - b.pos.x,
+      2) + Math.pow(a.pos.y - b.pos.y,
+      2));
+   });
+   var Universe = function (a) {
+      return {_: {},objects: a};
+   };
+   var PhysicalObject = F7(function (a,
+   b,
+   c,
+   d,
+   e,
+   f,
+   g) {
+      return _U.insert("form",
+      f,
+      _U.insert("thrustable",
+      e,
+      _U.insert("mass",
+      d,
+      _U.insert("acc",
+      c,
+      _U.insert("vel",
+      b,
+      _U.insert("pos",a,g))))));
+   });
+   var Point = F3(function (a,
+   b,
+   c) {
+      return _U.insert("y",
+      b,
+      _U.insert("x",a,c));
+   });
+   var au = 149597870700;
+   var sunOrbitalVelocity = 0;
+   var sunMass = 1.98855 * 1.0e31;
+   var earthOrbitalVelocity = 300000;
+   var earthMass = 5.97219 * 1.0e25;
+   var gravitationalConstant = 6.67384 * 1.0e-10;
+   var rocketAcc = 3.755e-3;
+   var cometMass = 2.2e14;
+   var mercuryCapsuleMass = 2000;
+   var rocketThrust = mercuryCapsuleMass * rocketAcc;
+   var uranusSemiMajorAxis = 2.8706714e12;
+   var solarSystemDiameter = uranusSemiMajorAxis * 2;
+   var metersPerPixel = solarSystemDiameter / 5000;
+   var metersToPixels = function (meters) {
+      return meters / metersPerPixel;
+   };
+   var vector = F4(function (color,
+   scale,
+   originPt,
+   offsetPt) {
+      return A2(Graphics.Collage.traced,
+      Graphics.Collage.solid(color),
+      _L.fromArray([{ctor: "_Tuple2"
+                    ,_0: metersToPixels(originPt.x)
+                    ,_1: metersToPixels(originPt.y)}
+                   ,{ctor: "_Tuple2"
+                    ,_0: metersToPixels(originPt.x) + scale * metersToPixels(offsetPt.x)
+                    ,_1: metersToPixels(originPt.y) + scale * metersToPixels(offsetPt.y)}]));
+   });
+   var velocityVectorForm = function (ship) {
+      return A4(vector,
+      Color.red,
+      velocityScaleFactor,
+      ship.pos,
+      ship.vel);
+   };
+   var accelerationVectorForm = function (ship) {
+      return A4(vector,
+      Color.blue,
+      accelerationScaleFactor,
+      ship.pos,
+      ship.acc);
+   };
+   var renderUniverse = F2(function (_v16,
+   universe) {
+      return function () {
+         switch (_v16.ctor)
+         {case "_Tuple2":
+            return function () {
+                 var ship = List.head(universe.objects);
+                 var forms = {ctor: "::"
+                             ,_0: velocityVectorForm(ship)
+                             ,_1: {ctor: "::"
+                                  ,_0: accelerationVectorForm(ship)
+                                  ,_1: universeForms(universe)}};
+                 return A3(Graphics.Collage.collage,
+                 _v16._0,
+                 _v16._1,
+                 _L.append(_L.fromArray([Graphics.Collage.toForm(A3(Graphics.Element.tiledImage,
+                                        _v16._0,
+                                        _v16._1,
+                                        "stars.png"))
+                                        ,velocityVectorForm(ship)
+                                        ,accelerationVectorForm(ship)]),
+                 universeForms(universe)));
+              }();}
+         _E.Case($moduleName,
+         "between lines 190 and 196");
+      }();
+   });
+   var thrustVector = F3(function (_v20,
+   _v21,
+   ship) {
+      return function () {
+         switch (_v21.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v20.ctor)
+                 {case "_Tuple2":
+                    return function () {
+                         var $ = A2(relativeToCenter,
+                         {ctor: "_Tuple2"
+                         ,_0: _v20._0
+                         ,_1: _v20._1},
+                         {ctor: "_Tuple2"
+                         ,_0: _v21._0
+                         ,_1: _v21._1}),
+                         vxc = $._0,
+                         vyc = $._1;
+                         var $ = {ctor: "_Tuple2"
+                                 ,_0: metersToPixels(ship.pos.x)
+                                 ,_1: metersToPixels(ship.pos.y)},
+                         sx = $._0,
+                         sy = $._1;
+                         var $ = {ctor: "_Tuple2"
+                                 ,_0: vxc - sx
+                                 ,_1: vyc - sy},
+                         vxs = $._0,
+                         vys = $._1;
+                         var vfinish = {_: {}
+                                       ,x: vxs
+                                       ,y: vys};
+                         return vfinish;
+                      }();}
+                 _E.Case($moduleName,
+                 "between lines 178 and 182");
+              }();}
+         _E.Case($moduleName,
+         "between lines 178 and 182");
+      }();
+   });
+   var thrust = F4(function (ship,
+   _v28,
+   _v29,
+   mouseDown) {
+      return function () {
+         switch (_v29.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v28.ctor)
+                 {case "_Tuple2":
+                    return mouseDown ? function () {
+                         var thrustVec = A3(thrustVector,
+                         {ctor: "_Tuple2"
+                         ,_0: _v28._0
+                         ,_1: _v28._1},
+                         {ctor: "_Tuple2"
+                         ,_0: _v29._0
+                         ,_1: _v29._1},
+                         ship);
+                         var $ = {ctor: "_Tuple2"
+                                 ,_0: thrustVec.x
+                                 ,_1: thrustVec.y},
+                         vx = $._0,
+                         vy = $._1;
+                         return {ctor: "_Tuple2"
+                                ,_0: rocketThrust * vx
+                                ,_1: rocketThrust * vy};
+                      }() : {ctor: "_Tuple2"
+                            ,_0: 0
+                            ,_1: 0};}
+                 _E.Case($moduleName,
+                 "between lines 120 and 124");
+              }();}
+         _E.Case($moduleName,
+         "between lines 120 and 124");
+      }();
+   });
+   var formGen = F4(function (pos,
+   color,
+   radius,
+   name) {
+      return A2(Graphics.Collage.move,
+      {ctor: "_Tuple2"
+      ,_0: pos.x / metersPerPixel
+      ,_1: pos.y / metersPerPixel},
+      Graphics.Collage.group(_L.fromArray([A2(Graphics.Collage.filled,
+                                          color,
+                                          Graphics.Collage.circle(radius))
+                                          ,Graphics.Collage.toForm(Text.plainText(name))])));
+   });
+   var generateBody = F7(function (pos,
+   vel,
+   mass,
+   color,
+   radius,
+   name,
+   thrustable) {
+      return {_: {}
+             ,acc: {_: {},x: 0,y: 0}
+             ,form: A4(formGen,
+             pos,
+             color,
+             radius,
+             name)
+             ,mass: mass
+             ,pos: pos
+             ,thrustable: thrustable
+             ,vel: vel};
+   });
+   var comet = F2(function (pos,
+   vel) {
+      return A7(generateBody,
+      pos,
+      vel,
+      cometMass,
+      Color.lightRed,
+      4,
+      "",
+      false);
+   });
+   var comet1 = A2(comet,
+   {_: {},x: au,y: au},
+   {_: {},x: -200000,y: 80000});
+   var comet2 = A2(comet,
+   {_: {},x: au,y: 0 - au},
+   {_: {},x: -230000,y: -20000});
+   var comet3 = A2(comet,
+   {_: {},x: 0 - au,y: au},
+   {_: {},x: 250000,y: 150000});
+   var comet4 = A2(comet,
+   {_: {},x: au,y: -2 * au},
+   {_: {},x: -200000,y: 80000});
+   var sun = A7(generateBody,
+   {_: {},x: 0,y: 0},
+   {_: {}
+   ,x: 0
+   ,y: sunOrbitalVelocity},
+   sunMass,
+   Color.lightYellow,
+   30,
+   "☉",
+   false);
+   var earth = A7(generateBody,
+   {_: {}
+   ,x: sun.pos.x + au
+   ,y: sun.pos.y},
+   {_: {}
+   ,x: 0
+   ,y: earthOrbitalVelocity},
+   earthMass,
+   Color.lightBlue,
+   10,
+   "⊕",
+   false);
+   var ship = A7(generateBody,
+   {_: {}
+   ,x: earth.pos.x + 200000000
+   ,y: earth.pos.y},
+   {_: {}
+   ,x: 0
+   ,y: earthOrbitalVelocity + 10000},
+   mercuryCapsuleMass,
+   Color.white,
+   3,
+   "",
+   true);
+   var theUniverse = {_: {}
+                     ,objects: _L.fromArray([ship
+                                            ,sun
+                                            ,earth
+                                            ,comet1
+                                            ,comet2
+                                            ,comet3
+                                            ,comet4])};
+   var inputFPS = 60;
+   var input = A2(Signal.sampleOn,
+   Time.fps(inputFPS),
+   A2(Signal._op["~"],
+   A2(Signal._op["~"],
+   A2(Signal._op["<~"],
+   F3(function (v0,v1,v2) {
+      return {ctor: "_Tuple3"
+             ,_0: v0
+             ,_1: v1
+             ,_2: v2};
+   }),
+   Window.dimensions),
+   currentTouchPosition),
+   hasTouch));
+   var timeDelta = 8000;
+   var epsilon = 1.0e-2;
+   var force = F2(function (a,b) {
+      return function () {
+         var dist = A2(distance,a,b);
+         var unitX = (a.pos.x - b.pos.x) / dist;
+         var unitY = (a.pos.y - b.pos.y) / dist;
+         var f = 0 - gravitationalConstant * a.mass * b.mass / Math.pow(dist,
+         2);
+         var $ = {ctor: "_Tuple2"
+                 ,_0: f * unitX
+                 ,_1: f * unitY},
+         forceX = $._0,
+         forceY = $._1;
+         return _U.cmp(dist,
+         epsilon) < 0 ? {ctor: "_Tuple2"
+                        ,_0: 0
+                        ,_1: 0} : {ctor: "_Tuple2"
+                                  ,_0: forceX
+                                  ,_1: forceY};
+      }();
+   });
+   var moveObject = F7(function (dt,
+   _v36,
+   _v37,
+   mdown,
+   ship,
+   allobjects,
+   object) {
+      return function () {
+         switch (_v37.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v36.ctor)
+                 {case "_Tuple2":
+                    return function () {
+                         var $ = mdown && object.thrustable ? A4(thrust,
+                         ship,
+                         {ctor: "_Tuple2"
+                         ,_0: _v36._0
+                         ,_1: _v36._1},
+                         {ctor: "_Tuple2"
+                         ,_0: _v37._0
+                         ,_1: _v37._1},
+                         mdown) : {ctor: "_Tuple2"
+                                  ,_0: 0
+                                  ,_1: 0},
+                         thrustX = $._0,
+                         thrustY = $._1;
+                         var forces = A2(List.map,
+                         force(object),
+                         allobjects);
+                         var $ = A3(List.foldr,
+                         tupleAdd,
+                         {ctor: "_Tuple2",_0: 0,_1: 0},
+                         forces),
+                         forceX = $._0,
+                         forceY = $._1;
+                         var $ = {ctor: "_Tuple2"
+                                 ,_0: forceX + thrustX
+                                 ,_1: forceY + thrustY},
+                         totalForceX = $._0,
+                         totalForceY = $._1;
+                         var $ = {ctor: "_Tuple2"
+                                 ,_0: totalForceX / object.mass
+                                 ,_1: totalForceY / object.mass},
+                         ax$ = $._0,
+                         ay$ = $._1;
+                         return {_: {}
+                                ,acc: {_: {},x: ax$,y: ay$}
+                                ,form: A2(Graphics.Collage.move,
+                                {ctor: "_Tuple2"
+                                ,_0: object.vel.x * dt / metersPerPixel
+                                ,_1: object.vel.y * dt / metersPerPixel},
+                                object.form)
+                                ,mass: object.mass
+                                ,pos: {_: {}
+                                      ,x: object.pos.x + object.vel.x * dt
+                                      ,y: object.pos.y + object.vel.y * dt}
+                                ,thrustable: object.thrustable
+                                ,vel: {_: {}
+                                      ,x: object.vel.x + ax$ * dt
+                                      ,y: object.vel.y + ay$ * dt}};
+                      }();}
+                 _E.Case($moduleName,
+                 "between lines 134 and 150");
+              }();}
+         _E.Case($moduleName,
+         "between lines 134 and 150");
+      }();
+   });
+   var nextUniverse = F2(function (_v44,
+   universe) {
+      return function () {
+         switch (_v44.ctor)
+         {case "_Tuple3":
+            switch (_v44._0.ctor)
+              {case "_Tuple2":
+                 return function () {
+                      var ship = List.head(universe.objects);
+                      var mvFn = A6(moveObject,
+                      timeDelta,
+                      {ctor: "_Tuple2"
+                      ,_0: _v44._0._0
+                      ,_1: _v44._0._1},
+                      _v44._1,
+                      _v44._2,
+                      ship,
+                      universe.objects);
+                      return _U.replace([["objects"
+                                         ,A2(List.map,
+                                         mvFn,
+                                         universe.objects)]],
+                      universe);
+                   }();}
+              break;}
+         _E.Case($moduleName,
+         "between lines 154 and 156");
+      }();
+   });
+   var main = A2(Signal._op["~"],
+   A2(Signal._op["<~"],
+   renderUniverse,
+   Window.dimensions),
+   A3(Signal.foldp,
+   nextUniverse,
+   theUniverse,
+   input));
+   _elm.Main.values = {_op: _op
+                      ,epsilon: epsilon
+                      ,timeDelta: timeDelta
+                      ,inputFPS: inputFPS
+                      ,uranusSemiMajorAxis: uranusSemiMajorAxis
+                      ,solarSystemDiameter: solarSystemDiameter
+                      ,metersPerPixel: metersPerPixel
+                      ,mercuryCapsuleMass: mercuryCapsuleMass
+                      ,cometMass: cometMass
+                      ,rocketAcc: rocketAcc
+                      ,gravitationalConstant: gravitationalConstant
+                      ,earthMass: earthMass
+                      ,earthOrbitalVelocity: earthOrbitalVelocity
+                      ,sunMass: sunMass
+                      ,sunOrbitalVelocity: sunOrbitalVelocity
+                      ,au: au
+                      ,rocketThrust: rocketThrust
+                      ,metersToPixels: metersToPixels
+                      ,formGen: formGen
+                      ,generateBody: generateBody
+                      ,comet: comet
+                      ,sun: sun
+                      ,earth: earth
+                      ,ship: ship
+                      ,comet1: comet1
+                      ,comet2: comet2
+                      ,comet3: comet3
+                      ,comet4: comet4
+                      ,theUniverse: theUniverse
+                      ,distance: distance
+                      ,universeForms: universeForms
+                      ,force: force
+                      ,thrust: thrust
+                      ,tupleAdd: tupleAdd
+                      ,moveObject: moveObject
+                      ,nextUniverse: nextUniverse
+                      ,vector: vector
+                      ,velocityScaleFactor: velocityScaleFactor
+                      ,accelerationScaleFactor: accelerationScaleFactor
+                      ,velocityVectorForm: velocityVectorForm
+                      ,accelerationVectorForm: accelerationVectorForm
+                      ,thrustVector: thrustVector
+                      ,relativeToCenter: relativeToCenter
+                      ,renderUniverse: renderUniverse
+                      ,emptyPosition: emptyPosition
+                      ,touchPosition: touchPosition
+                      ,currentTouchPosition: currentTouchPosition
+                      ,hasTouch: hasTouch
+                      ,input: input
+                      ,main: main
+                      ,Point: Point
+                      ,PhysicalObject: PhysicalObject
+                      ,Universe: Universe};
+   return _elm.Main.values;
+   };</script></head><body><script type="text/javascript">Elm.fullscreen(Elm.Main)</script><noscript></noscript>
+<a href="https://github.com/stephenbalaban/Gravity"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25007587-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body></html>

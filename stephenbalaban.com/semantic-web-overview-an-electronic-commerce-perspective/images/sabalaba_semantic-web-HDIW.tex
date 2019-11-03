@@ -1,0 +1,383 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[latin1]{inputenc}
+\usetheme{Warsaw}
+\usecolortheme{dove}
+\title[HDIW: The Semantic Web]{The Semantic Web, \\How Does It Work?\\{\small A Technological Overview \& Applications to Electronic Commerce}}
+\author{Stephen Balaban}
+\institute{EECS 547}
+\date{2011-01-31}
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\frame{\frametitle{Table of Contents}{\small\tableofcontents}}
+
+\section[Concept]{Conceptual Overview}
+
+\subsection{In One Sentence}
+\begin{frame}{In One Sentence}
+The Semantic Web is
+{\huge a web of data.}\\
+\pause
+\begin{itemize}
+  \item Machine readible
+  \item Comprised of \textbf{Resources}
+  \item Resources connected with \textit{links}
+\end{itemize}
+\vfill
+\end{frame}
+
+\subsection{The Concept}
+\begin{frame}{The Concept}
+
+\vspace*{\fill} 
+\begin{quote} 
+``I have a dream for the Web [in which computers] become capable of analyzing all the data on the Web – the content, links, and transactions between people and computers. A ‘Semantic Web’, which should make this possible, has yet to emerge, but when it does, the day-to-day mechanisms of trade, bureaucracy and our daily lives will be handled by machines talking to machines. The ‘intelligent agents’ people have touted for ages will finally materialize."\\  \hfill--Tim Berners-Lee, Weaving the Web (1999)
+\end{quote}
+\vspace*{\fill}
+
+\end{frame}
+
+\subsection{Linked Data}
+\begin{frame}{Linked Data {\tiny (image courtesy http://linkeddata.org/)}}
+\begin{center}
+\includegraphics[scale=0.20]{files/linked-data.png}
+\end{center}
+\end{frame}
+
+
+\subsection[E-Commerce]{E-Commerce Context}
+\begin{frame}{E-Commerce Context}
+The semantic web helps automate the \textit{Connection} facet of Electronic Commerce.  The emergence of a Semantic Web will allow for the automated discovery of products and services and the people that need them.
+\end{frame}
+
+\begin{frame}{E-Commerce Context}
+Doing entity-specific queries using text is currently difficult.\\
+\includegraphics[width=200pt]{files/current.png}
+\pause
+
+A fully Semantic Web might allow you to execute this query:\\
+
+\texit{``Return me a list of all bolt manufacturers owned by graduates of University of Michigan--Ann Arbor."}
+\vspace{0.25cm}
+
+\end{frame}
+
+\section{Technological Overview}
+\begin{frame}{Technological Overview}
+Four main technologies:
+
+\begin{enumerate}
+  \item Uniform Resource Identifiers (URIs)
+  \item Resource Description Framework (RDF)
+  \item Web Ontology Language (OWL)
+  \item SPARQL Protocol and RDF Query Language (SPARQL)
+\end{enumerate}
+
+\end{frame}
+
+\subsection[URIs]{Unifirm Resource Idenifiers (URIs)}
+\begin{frame}{Uniform Resource Identifiers (URIs)}
+Links to Resources (More than just URLs)\\
+\vspace{1cm}
+\begin{tabular}{| c | c |}
+\hline
+\textbf{URI} & \textbf{Resource}\\
+\hline
+http://www.stephenbalaban.com/ & My Homepage \\
+\hline
+mailto:sabalaba@umich.edu  & My Mailbox\\
+\hline
+http://www.stephenbalaban.com/\#me & Myself (Person)\\
+\hline
+\end{tabular}
+\end{frame}
+
+\subsection[RDF]{Resource Description Framework (RDF)}
+\begin{frame}{Resource Description Framework (RDF)}
+RDF/XML syntax:
+{\tiny\begin{verbatim}
+
+  <?xml version="1.0"?>\\
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns\#"\\
+    \hspace{26pt}           xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact\#">\\
+\hspace{6.5pt}    <contact:Person rdf:about="http://www.whitehouse.gov/people/alincoln/\#me">\\
+    \hspace{13pt}<contact:fullName>Abraham Lincoln</contact:fullName>\\
+    \hspace{13pt}<contact:mailbox rdf:resource="mailto:abraham@whitehouse.gov"/>\\
+    \hspace{13pt}<contact:personalTitle>Pres.</contact:personalTitle> \\
+\hspace{6.5pt}    </contact:Person>\\
+ </rdf:RDF>
+\end{verbatim}}
+\end{frame}
+
+\begin{frame}{Resource Description Framework (RDF) - FOAF}
+Source RDF (Friend Of A Friend Vocabulary):
+{\tiny\begin{verbatim}
+
+<rdf:RDF\\
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns\#"\\
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema\#"\\
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"\\
+      xmlns:admin="http://webns.net/mvcb/">\\
+\hspace{0.25cm}<foaf:Person rdf:ID="me">\\
+\hspace{0.25cm}<foaf:name>Stephen Balaban</foaf:name>\\
+\hspace{0.25cm}<foaf:depiction>http://www.stephenbalaban.com/me.jpg</foaf:nick>\\
+\hspace{0.25cm}<foaf:givenname>Stephen</foaf:givenname>\\
+\hspace{0.25cm}<foaf:family\_name>Balaban</foaf:family\_name>\\
+\hspace{0.25cm}<foaf:nick>sabalaba</foaf:nick>\\
+\hspace{0.25cm}<foaf:mbox\_sha1sum>89040ec96143df2fa32843b671b99f2f83704b4d</foaf:mbox\_sha1sum>\\
+\hspace{0.25cm}<foaf:homepage rdf:resource="http://www.stephenbalaban.com/"/>\\
+\hspace{0.25cm}<foaf:schoolHomepage rdf:resource="http://www.umich.edu/"/></foaf:Person>\\
+</rdf:RDF>
+\end{verbatim}}
+\end{frame}
+
+\begin{frame}{Resource Description Framework (RDF) - FOAF}
+\begin{tabular}{ l l }
+\textbf{Entity Type:}& Person \\
+\textbf{Depiction:}& \includegraphics[scale=0.25]{files/me.jpg}\\
+\textbf{Name:}& Stephen Balaban\\
+\textbf{First Name:}& Stephen\\
+\textbf{Family Name:}& Balaban\\
+\textbf{Nickname:}& sabalaba\\
+\textbf{Email SHA1:}& 89040ec96143df2fa32843b671b99f2f83704b4d\\
+\textbf{Homepage:}& \url{http://www.stephenbalaban.com/}\\
+\textbf{School:}& University of Michigan\\
+\textbf{School Homepage:}& \url{http://www.umich.edu/}\\
+\end{tabular}
+\end{frame}
+
+\subsection[OWL]{Web Ontology Language (OWL)}
+\begin{frame}{Web Ontology Language (OWL)}
+\textbf{Definition:}
+An ontology is the formal representation of knowledge as a set of concepts within a domain, and the relationships between those concepts.
+\end{frame}
+\begin{frame}{Web Ontology Language (OWL), cont.}
+In the Semantic Web, ontologies provide the vocabulary and grammer with which we manipulate resources. Ontologies, and the axioms they set up, allow us to come to logical conclusions about the data we are given.
+\end{frame}
+\begin{frame}{Web Ontology Language (OWL), cont.}
+We have two RDF files describing: 
+\begin{itemize}
+\item EECS 547 Winter 2011
+\item Stephen Balaban.
+\end{itemize}
+\pause
+The Ontology provides the `rules of operation' by which we can infer certain 
+things from the data at hand.\\
+\pause
+\vspace{0.25cm}
+{\tiny
+$C(x,y):$ x is a class at y\\
+$T(x,y):$ x took the class, y\\
+$A(x,y):$ x attended y\\
+$C(x,y) \land T(z,x) \rightarrow A(z,y)$
+$s$ is Stephen Balaban, $e$ is EECS 547 and $m$ is UofM\\
+$C(e,m) \land T(s,e) \rightarrow A(s,m)$\\
+$\therefore A(s,m)$\\
+}
+\vspace{0.25cm}
+Because I took EECS 547, a class at University of Michigan\\
+We can conclude that I attended University of Michigan\\
+\end{frame}
+
+\begin{frame}{The Triple}
+\begin{center}
+{\Huge Subject - Predicate - Obect }\\
+\vspace{10pt}
+\includegraphics[scale=3.00]{files/abrahamLincoln.jpg}
+\hspace{30pt}\raisebox{60pt}{\Huge =}\hspace{30pt}
+\includegraphics[scale=0.175]{files/potus.png}\\
+\end{center}
+\hspace{18pt}(Abraham Lincoln)\hspace{35pt}(isA)\hspace{60pt}(President)\\
+\begin{center}
+\end{center}
+\end{frame}
+
+\begin{frame}{The Triple}
+\begin{center}
+{\Huge Subject - Predicate - Obect }\\
+\vspace{10pt}
+\includegraphics[scale=0.20]{files/obama.jpg}
+\hspace{30pt}\raisebox{60pt}{\Huge $\subseteq$}\hspace{30pt}
+\includegraphics[scale=0.22]{files/politicians.png}\\
+\end{center}
+\hspace{38pt}(President)\hspace{35pt}(subclassOf)\hspace{45pt}(Politician)\\
+\begin{center}
+\end{center}
+\end{frame}
+
+\subsection[SPARQL]{SPARQL Protocol and RDF Query Language (SPARQL)}
+\begin{frame}{SPARQL Protocol and RDF Query Language (SPARQL)}
+SPARQL is to the Semantic Web what SQL is to Relational Database Management Systems.
+\end{frame}
+
+\begin{frame}{SPARQL Protocol and RDF Query Language (SPARQL)}
+A basic SPARQL query:
+{\tiny\begin{verbatim}
+
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>\\
+\hspace{0.80cm}gr:   <http://purl.org/goodrelations/v1\#/>\\
+SELECT ?name ?mbox\\
+WHERE \{\\
+\hspace{0.25cm}  ?person a foaf:Person.\\
+\hspace{0.25cm} ?person foaf:name ?name.\\
+\hspace{0.25cm} ?person foaf:mbox ?mbox.\\
+\hspace{0.25cm} ?person foaf:schoolHomepage http://www.umich.edu/.\\
+\hspace{0.25cm} ?person gr:seeks "Multiagent Systems: Algorithmic, Game-Theoretic, and Logical Foundations"\\
+\}
+\end{verbatim}}
+\pause
+
+This query states:\\ ``Return the names and emails of all people who go to University of Michigan who seek to buy \textit{Multiagent Systems: Algorithmic, Game-Theoretic, and Logical Foundations}".
+\end{frame}
+
+\section[Applications]{Applications To Electronic Commerce}
+\begin{frame}
+{\Large Electronic Commerce Applications}
+\begin{itemize}
+\item RDFa
+\item Good Relations Ontology
+\item hProduct \& Microformats
+\end{itemize}
+\end{frame}
+
+\subsection[RDFa]{RDFa \& Microformats}
+\begin{frame}{RDFa (Resource Description Framework - in - attributes)}
+How you can start being `Semantic' today (microformats):
+{\tiny\begin{verbatim}
+
+<div xmlns:foaf="http://xmlns.com/foaf/0.1/"\\
+\hspace{1cm}xmlns:dc="http://purl.org/dc/elements/1.1/"\\
+\hspace{1cm}version="XHTML+RDFa 1.0" xml:lang="en">\\
+\hspace{0.5cm}  <h1>Stephen Balaban's Home Page</h1>\\
+ \hspace{0.5cm} <p>My name is <span property="foaf:name">Stephen Balaban</span> and I like\\
+ \hspace{1.0cm}   <a href="http://www.hackerne.ws/" rel="foaf:interest"\\
+ \hspace{1.0cm}     xml:lang="en">Hacker News</a>.\\
+ \hspace{0.5cm} </p>\\
+</div>\\
+\end{verbatim}}
+Renders As:\\
+\vspace{0.25cm}
+
+\includegraphics[scale=0.33]{files/rdf-a.png}
+\end{frame}
+
+\subsection[Good Relations]{GoodRelations: Electronic Commerce Ontology}
+\begin{frame}{Good Relations: Electronic Commerce Ontology}
+\begin{center}
+\includegraphics[scale=0.33]{files/gr.png}\\
+http://www.heppnetz.de/projects/goodrelations/
+\end{center}
+\pause
+\textbf{Core Classes:}
+\begin{itemize}
+\item gr:BusinessEntity -- \textbf{Business} providing offer
+\item gr:Offering -- \textbf{Offer} to sell product or provide service
+\item gr:ProductOrServiceModel -- \textbf{Description} of product
+\item gr:LocationOfSalesOrServiceProvisioning -- \textbf{Location} of offer
+\end{itemize}
+\end{frame}
+
+\subsection{Microformats}
+\begin{frame}{hProduct \& Microformats}
+\item hProduct -- for product and offers (Similar to Good Relations)
+
+{\tiny Example courtesy http://www.google.com/support/webmasters/bin/answer.py?answer=146750#product_page}
+
+{\tiny\begin{verbatim}
+
+<div itemscope itemtype="http://data-vocabulary.org/Product">\\
+\hspace{0.1cm}<span itemprop="brand">ACME</span>\\
+\hspace{0.1cm}<span itemprop="name">Executive Anvil</span>\\
+\hspace{0.1cm}<img itemprop="image" src="anvil\_executive.jpg" />\\
+\hspace{0.1cm}<span itemprop="offerDetails" itemscope itemtype="http://data-vocabulary.org/Offer">\\
+\hspace{0.15cm}<meta itemprop="currency" content="USD" />\\
+\hspace{0.15cm}\$<span itemprop="price">119.99</span>\\
+\hspace{0.1cm}</span>\\
+</div>
+\end{verbatim}}
+\end{frame}
+
+
+\begin{frame}{Other Microformats}
+\begin{itemize}
+\item hCard -- for people/contact info
+\item hCalendar -- for events
+\item hMedia -- for audio/video content
+\item hNews -- for news content
+\item hReview -- for reviews
+\end{itemize}
+
+Learn more at \url{http://www.microformats.org/}
+\end{frame}
+
+
+
+\subsection[RDFa + gr or hProduct]{RDFa + gr or hProduct}
+\begin{frame}{Good Relations + RDFa or hProduct: Good right now!}
+\begin{center}
+Google's `Rich Snippets' use RDFa/hProduct and GoodRelations.
+{\huge RDFa or hProduct\\
+\vspace{0.25cm}
++}\\
+\vspace{0.25cm}
+\includegraphics[scale=0.33]{files/gr.png}\\
+\vspace{0.25cm}
+{\huge =}\\
+\vspace{0.25cm}
+\includegraphics[scale=0.33]{files/richsnippet.png}\\
+\end{center}
+\end{frame}
+
+\section[Summary]{Summary}
+\subsection[Future]{The Future of the Semantic Web}
+\begin{frame}{The Future of the Semantic Web}
+
+\begin{itemize}
+\item\textbf{Microformats popular}\\
+
+\item\textbf{Industry incumbent support}\\
+
+\item\textbf{Popularity of smart mobile devices}\\
+
+\item\textbf{Automated Agents}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Resources Used:}
+\tiny
+\begin{itemize}
+\item \textbf{Concept:}
+\item \url{http://www.w3.org/DesignIssues/LinkedData}
+\item \url{http://www.w3.org/2001/sw/SW-FAQ#swgoals}
+\item \url{http://linkeddata.org/}
+\item \url{http://ilamont.blogspot.com/2010/09/encounter-with-tim-berners-lee-and.html}
+\item \url{http://www.mpi-inf.mpg.de/yago-naga/yago/demo.html}
+\item \url{http://webscience.org/about/people/}
+\item \url{http://richard.cyganiak.de/2007/10/lod/lod-datasets\_2010-09-22.html}
+\item \url{http://www.w3.org/2001/sw/SW-FAQ}\\
+\vspace{0.1cm}
+\textbf{Technology:}
+\item \url{http://en.wikipedia.org/wiki/Dereferenceable_Uniform_Resource_Identifier}
+\item \url{http://www.w3.org/RDF/}
+\item \url{http://www.w3.org/TR/rdf-sparql-query/}
+\item \url{http://www.w3.org/TR/owl-ref/}\\
+\vspace{0.1cm}
+\textbf{Applications:}
+\item \url{http://www.ebusiness-unibw.org/wiki/GoodRelationsQuickstart}
+\item \url{http://www.heppnetz.de/ontologies/goodrelations/v1}
+\item \url{http://www.google.com/support/webmasters/bin/answer.py?answer=186036}
+\item \url{http://en.wikipedia.org/wiki/HCard}
+\item \url{http://microformats.org/}\\
+\vspace{0.1cm}
+\textbf{Other:}
+\item FOAF-o-Matic: \url{http://www.ldodds.com/foaf/foaf-a-matic}
+\end{itemize}
+\end{frame}
+
+\end{document}
